@@ -1,116 +1,40 @@
 # Settings Management System
 
-A full-stack application for managing arbitrary JSON configuration data with a RESTful API backend and React frontend.
+Full-stack app for storing and managing JSON configuration data. Pretty straightforward CRUD system with a REST API and UI.
 
-## Tech Stack
+Built with TypeScript throughout - Express backend, React frontend, PostgreSQL for storage, all containerized with Docker.
 
-- **Backend**: Node.js, Express.js, TypeScript
-- **Frontend**: React, TypeScript, Vite
-- **Database**: PostgreSQL
-- **Deployment**: Docker, Docker Compose
+## Stack
+- Backend: Node.js + Express + TypeScript
+- Frontend: React + TypeScript + Vite
+- Database: PostgreSQL
+- Deployment: Docker Compose
 
-## Quick Start
+## Running It
 
-### Prerequisites
+**Prerequisites:** Docker Desktop
 
-- Docker Desktop installed and running
+**Steps:**
+1. Clone the repo
+2. `cd settings-management-system`
+3. `docker-compose up --build`
+4. Go to http://localhost:3000
 
-### Running the Application
-
-1. Navigate to the project directory:
-```bash
-cd settings-management-system
-```
-
-2. Start all services:
-```bash
-docker-compose up --build
-```
-
-4. Access the application:
-   - **Frontend UI**: http://localhost:3000
-   - **Backend API**: http://localhost:3001
-
-### Stopping the Application
-
-Press `Ctrl+C` in the terminal, then:
-```bash
-docker-compose down
-```
+Takes about a minute to build and start everything up.
 
 ## API Endpoints
+- `POST /settings` - Create new setting
+- `GET /settings` - Get all (paginated)
+- `GET /settings/{uid}` - Get one
+- `PUT /settings/{uid}` - Update
+- `DELETE /settings/{uid}` - Delete
 
-- `POST /settings` - Create a new setting
-- `GET /settings?page=1&limit=10` - Get all settings (paginated)
-- `GET /settings/{uid}` - Get a specific setting
-- `PUT /settings/{uid}` - Update a setting
-- `DELETE /settings/{uid}` - Delete a setting
-- `GET /health` - Health check
+Backend runs on port 3001 if you want to hit the API directly.
 
-## Architecture Decisions
+## Design Decisions
 
-### Database: PostgreSQL
-- **JSONB support** for efficient schemaless JSON storage
-- **ACID compliance** for data integrity
-- **Proven scalability** for production use
+**PostgreSQL:** Went with Postgres because JSONB support is perfect for schemaless data, plus ACID guarantees and it's what I'm familiar with.
 
-### Pagination: Offset-based
-- Simple and user-friendly
-- Direct page navigation
-- Optimal for moderate-sized datasets
-- Could migrate to cursor-based for millions of records
+**Pagination:** Used offset-based (page/limit params). Simple and works fine for this use case. Could switch to cursor-based if we needed to scale to millions of records.
 
-### TypeScript
-- Type safety catches errors at compile time
-- Improved developer experience
-- Aligns with modern web development standards
-
-## Project Structure
-```
-settings-management-system/
-├── backend/
-│   ├── src/
-│   │   └── index.ts
-│   ├── Dockerfile
-│   ├── package.json
-│   └── tsconfig.json
-├── frontend/
-│   ├── src/
-│   │   ├── App.tsx
-│   │   ├── App.css
-│   │   └── main.tsx
-│   ├── Dockerfile
-│   ├── index.html
-│   └── package.json
-├── docker-compose.yml
-└── README.md
-```
-```
-
-3. **Save**
-
----
-
-### **Step 14: Create .gitignore**
-
-1. **In root folder, create new file: `.gitignore`**
-2. Paste this:
-```
-# Dependencies
-node_modules/
-npm-debug.log*
-
-# Build outputs
-dist/
-build/
-
-# Environment variables
-.env
-.env.local
-
-# IDEs
-.vscode/
-.DS_Store
-
-# Docker
-*.log
+**TypeScript:** Type safety catches a lot of bugs early and makes the code more maintainable. Also matches the role requirements.
