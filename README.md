@@ -1,6 +1,6 @@
 # Settings Management System
 
-Full-stack app for storing and managing JSON configuration data. Pretty straightforward CRUD system with a REST API and UI.
+Full-stack app for storing and managing JSON configuration data.
 
 Built with TypeScript throughout - Express backend, React frontend, PostgreSQL for storage, all containerized with Docker.
 
